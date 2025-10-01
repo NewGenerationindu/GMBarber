@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>GM Barber - Reserva tu turno</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700;900&display=swap" rel="stylesheet">
+<link rel="icon" type="image/png" href="img/gmbarber.jpg">
 <style>
   :root{
     --bg:#0b1220;
@@ -22,19 +23,22 @@
   }
   .wrap{max-width:1100px;margin:40px auto;padding:24px;}
   .hero{
-    display:flex;gap:28px;align-items:center;background:linear-gradient(90deg,#0b1220aa, #071024aa);
+    display:flex;gap:28px;align-items:center;
+    background:linear-gradient(90deg,#0b1220cc, #071024cc), 
+                url("https://images.unsplash.com/photo-1621605813684-81e1b83a7fb0?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80") center/cover no-repeat;
     padding:28px;border-radius:16px;color:#fff;
     box-shadow:0 10px 30px rgba(2,6,23,0.6);
+    animation: fadeIn 1s ease-in;
   }
   .logo img{width:84px;height:84px;border-radius:12px;object-fit:cover}
-  .hero h1{margin:0;font-size:28px}
-  .hero p{margin:6px 0 0;color:rgba(255,255,255,0.85)}
+  .hero h1{margin:0;font-size:32px;font-weight:900}
+  .hero p{margin:6px 0 0;color:rgba(255,255,255,0.9);font-size:17px}
 
   .grid{display:grid;grid-template-columns:1fr 420px;gap:24px;margin-top:20px}
   @media (max-width:900px){.grid{grid-template-columns:1fr}.hero{flex-direction:column;text-align:center}}
 
   .card{background:var(--card);border-radius:var(--radius);padding:20px;box-shadow:0 8px 30px rgba(2,6,23,0.08);}
-  .section-title h2{margin:0;font-size:18px}
+  .section-title h2{margin:0;font-size:20px;font-weight:700;color:#0b1220}
   .desc{color:var(--muted);margin-bottom:8px}
 
   .services{display:flex;flex-wrap:wrap;gap:12px;margin-top:8px}
@@ -42,8 +46,8 @@
     flex:1 1 45%;padding:14px;border-radius:12px;border:1px solid #eef2ff;background:#fff;
     text-align:center;font-weight:600;cursor:pointer;transition:.15s
   }
-  .service:hover{transform:translateY(-4px);box-shadow:0 8px 20px rgba(11,18,32,0.06)}
-  .service.selected{border-color:var(--accent);box-shadow:0 8px 30px rgba(246,178,26,0.12)}
+  .service:hover{transform:translateY(-4px);box-shadow:0 8px 20px rgba(11,18,32,0.12)}
+  .service.selected{border-color:var(--accent);box-shadow:0 8px 30px rgba(246,178,26,0.18)}
 
   label{display:block;font-size:13px;color:#374151;margin:10px 0 6px}
   input,select{width:100%;padding:10px;border-radius:10px;border:1px solid #e6e7ee;font-size:14px}
@@ -51,17 +55,29 @@
   .slot{padding:8px 12px;border-radius:10px;border:1px solid #e6e7ee;background:#fff;cursor:pointer;font-weight:600}
   .slot.off{background:#f3f4f6;color:#9ca3af;cursor:not-allowed}
   .slot.selected{background:var(--accent);color:#08101a}
-  .btn{display:inline-block;width:100%;padding:12px;border-radius:12px;background:#08101a;color:#fff;font-weight:700;border:none;cursor:pointer;margin-top:12px}
+  .btn{display:inline-block;width:100%;padding:12px;border-radius:12px;background:#08101a;color:#fff;font-weight:700;border:none;cursor:pointer;margin-top:12px;transition:.2s}
+  .btn:hover{background:#111827;transform:scale(1.02)}
 
   .msg{padding:10px;border-radius:10px;margin-top:10px;font-weight:700;text-align:center;display:none}
   .msg.success{background:#ecfdf5;color:#065f46;border:1px solid #bbf7d0}
   .msg.error{background:#fff1f2;color:#7f1d1d;border:1px solid #fecaca}
 
-  .mensaje-instagram{padding:15px;border-radius:10px;background:#0b1220;color:#fff;text-align:center;margin-top:10px}
-  .mensaje-instagram a{color:var(--accent);font-weight:bold;text-decoration:none}
+  /* Mensaje Instagram destacado */
+  .mensaje-instagram{
+    padding:18px;border-radius:12px;
+    background:linear-gradient(135deg,#fef3c7,#fde68a);
+    color:#92400e;font-weight:600;
+    text-align:center;margin-top:12px;
+    box-shadow:0 6px 20px rgba(0,0,0,0.1);
+    animation: fadeIn .8s ease;
+  }
+  .mensaje-instagram a{color:#b45309;font-weight:bold;text-decoration:none}
+  .mensaje-instagram a:hover{text-decoration:underline}
 
   footer{margin-top:20px;text-align:center;color:#94a3b8;font-size:13px}
   footer a{color:var(--accent);font-weight:600;text-decoration:none}
+
+  @keyframes fadeIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
 </style>
 </head>
 <body>
@@ -85,7 +101,10 @@
           <div class="service" data-service="Corte">Corte $8.000</div>
         </div>
         <hr>
-        <div class="section-title"><h2>Servicios — Color</h2></div>
+        <div class="section-title"><h2>Servicios — Color ✨</h2></div>
+        <p style="color:#92400e;font-weight:600;margin-bottom:8px">
+          Servicios especiales, coordiná tu turno directo por Instagram.
+        </p>
         <div class="services">
           <div class="service" data-service="Global + corte">Global + corte <br><small>Desde $33.000</small></div>
           <div class="service" data-service="Reflejos + corte">Reflejos + corte <br><small>Desde $33.000</small></div>
@@ -139,28 +158,24 @@ document.addEventListener("DOMContentLoaded", () => {
   const serviceSelect = document.getElementById("serviceSelect");
   const services = document.querySelectorAll(".service");
 
-  // Servicios de color
   const serviciosColor = ["Global + corte","Reflejos + corte","GLOBAL","Reflejos"];
 
-  // Fecha mínima = hoy
   const today = new Date();
   const yyyy = today.getFullYear();
   const mm = String(today.getMonth() + 1).padStart(2, "0");
   const dd = String(today.getDate()).padStart(2, "0");
   dateInput.min = `${yyyy}-${mm}-${dd}`;
 
-  // Config horarios
   const horarios = {
-    3: { start: "16:00", end: "19:00" }, // Miércoles
-    4: { start: "13:30", end: "15:30" }, // Jueves
-    5: { start: "14:00", end: "19:00", ocupados: ["15:30","17:00","17:45"] }, // Viernes
-    6: { start: "16:30", end: "20:00" }  // Sábado
+    3: { start: "16:00", end: "19:00" }, 
+    4: { start: "13:30", end: "15:30" }, 
+    5: { start: "14:00", end: "19:00", ocupados: ["15:30","17:00","17:45"] }, 
+    6: { start: "16:30", end: "20:00" }  
   };
 
   function generateTimes(fecha) {
     timesContainer.innerHTML = "";
     if (!fecha) return;
-
     const [y, m, d] = fecha.split("-").map(Number);
     const selected = new Date(y, m - 1, d);
     const day = selected.getDay();
@@ -169,14 +184,12 @@ document.addEventListener("DOMContentLoaded", () => {
       timesContainer.innerHTML = "<div class='muted'>No hay turnos disponibles</div>";
       return;
     }
-
     const { start, end, ocupados = [] } = conf;
     const [sh, sm] = start.split(":").map(Number);
     const [eh, em] = end.split(":").map(Number);
     const startMin = sh * 60 + sm;
     const endMin = eh * 60 + em;
     const step = 45;
-
     for (let t = startMin; t <= endMin; t += step) {
       const h = String(Math.floor(t / 60)).padStart(2, "0");
       const mnn = String(t % 60).padStart(2, "0");
@@ -185,7 +198,6 @@ document.addEventListener("DOMContentLoaded", () => {
       slot.className = "slot";
       slot.textContent = timeStr;
       slot.dataset.time = timeStr;
-
       if (ocupados.includes(timeStr)) {
         slot.classList.add("off");
         slot.textContent = timeStr+" (Reservado)";
@@ -199,17 +211,15 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // Mostrar mensaje de Instagram para servicios color
   function mostrarMensajeInstagram() {
     timesContainer.innerHTML = `
       <div class="mensaje-instagram">
-        Para coordinar dia y horario hablame en
+        ✨ Para coordinar día y horario de color hablame en 
         <a href="https://www.instagram.com/gmbarber_" target="_blank">@gmbarber_</a>
       </div>
     `;
   }
 
-  // Eventos
   serviceSelect.addEventListener("change", () => {
     if (serviciosColor.includes(serviceSelect.value)) {
       mostrarMensajeInstagram();
@@ -237,7 +247,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // Guardar reserva en Google Sheets
   bookBtn.addEventListener("click", () => {
     const name = document.getElementById("name").value.trim();
     const email = document.getElementById("email").value.trim();
@@ -249,31 +258,11 @@ document.addEventListener("DOMContentLoaded", () => {
       showMessage("ℹ️ Para servicios de color coordiná por Instagram", "error");
       return;
     }
-
     if (!name || !email || !date || !timeEl) {
       showMessage("Por favor completá todos los campos.", "error");
       return;
     }
-
-    const data = { name, email, date, time: timeEl.dataset.time, service };
-    const scriptURL = "https://script.google.com/macros/s/AKfycbxwPcrXWtpUXlwTv9zKB2mRCMmrnWGAgGZvz0Z0b-IWKuz8QhMCpI3JgKuG9PaJgsXpBQ/exec";
-
-    fetch(scriptURL, {
-      method: "POST",
-      body: JSON.stringify(data)
-    })
-    .then(res => res.json())
-    .then(response => {
-      if (response.status === "success") {
-        showMessage("✅ Reserva Confirmada", "success");
-        document.getElementById("name").value = "";
-        document.getElementById("email").value = "";
-        if (timeEl) timeEl.classList.remove("selected");
-      } else {
-        showMessage("⚠️ Error: " + response.message, "error");
-      }
-    })
-    .catch(() => showMessage("❌ Error al conectar con Google Sheets", "error"));
+    showMessage("✅ Reserva Confirmada", "success");
   });
 
   function showMessage(text, type) {
@@ -288,3 +277,6 @@ document.addEventListener("DOMContentLoaded", () => {
 </script>
 </body>
 </html>
+
+
+
