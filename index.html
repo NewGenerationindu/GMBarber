@@ -120,7 +120,7 @@
   <!-- BANNER PRINCIPAL -->
 <div class="banner">
   <img src="img/GM.png" alt="GM Barber Banner">
-  <a href="#services" class="banner-btn">Reservar ahora</a>
+  <button id="goServices" class="banner-btn">Reservar ahora</a>
 </div>
 
 <div class="wrap">
@@ -316,6 +316,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
   document.getElementById("year").textContent = new Date().getFullYear();
 });
+document.getElementById("goServices").addEventListener("click", () => {
+  document.getElementById("services").scrollIntoView({ behavior: "smooth" });
+});
+
 </script>
 </body>
 </html>
