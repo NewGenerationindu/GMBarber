@@ -7,6 +7,42 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700;900&display=swap" rel="stylesheet">
 <link rel="icon" type="image/png" href="img/gmbarber.jpg">
 <style>
+  html { scroll-behavior: smooth; }
+
+  .banner{
+  width:100%;
+  min-height:90vh;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  background:#fff;
+  text-align:center;
+  padding:20px;
+}
+
+.banner img{
+  max-width:800px;
+  width:100%;
+  height:auto;
+  margin-bottom:20px;
+}
+
+.banner-btn{
+  display:inline-block;
+  padding:14px 28px;
+  border-radius:12px;
+  background:var(--accent);
+  color:#08101a;
+  font-weight:700;
+  text-decoration:none;
+  transition:.2s;
+}
+.banner-btn:hover{
+  background:#e5a60f;
+  transform:scale(1.05);
+}
+
   :root{
     --bg:#0b1220;
     --accent:#f6b21a;
@@ -81,11 +117,17 @@
 </style>
 </head>
 <body>
+  <!-- BANNER PRINCIPAL -->
+<div class="banner">
+  <img src="img/GM.png" alt="GM Barber Banner">
+  <a href="#services" class="banner-btn">Reservar ahora</a>
+</div>
+
 <div class="wrap">
   <div class="hero">
     <div class="logo"><img src="img/gmbarber.jpg" alt="GM Barber"></div>
     <div>
-      <h1>GM Barber — Reserva tu turno</h1>
+      <h1>GM Barber </h1>
       <p>Profesionalidad, estilo y puntualidad. Reserva fácil y rápida.</p>
     </div>
   </div>
