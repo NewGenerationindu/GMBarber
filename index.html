@@ -19,8 +19,6 @@
     font-family:Inter,system-ui,Arial;
     background:linear-gradient(180deg,#0f1724 0%, #071024 100%);
     color:#0b1220;
-    -webkit-font-smoothing:antialiased;
-    -moz-osx-font-smoothing:grayscale;
   }
   .wrap{max-width:1100px;margin:40px auto;padding:24px;}
   .hero{
@@ -28,50 +26,39 @@
     padding:28px;border-radius:16px;color:#fff;
     box-shadow:0 10px 30px rgba(2,6,23,0.6);
   }
-  .logo{
-    width:84px;height:84px;border-radius:12px;background:linear-gradient(135deg,var(--accent),#ff8a00);
-    display:flex;align-items:center;justify-content:center;font-weight:900;color:#08101a;font-size:28px;
-    box-shadow:0 6px 18px rgba(246,178,26,0.2), inset 0 -6px 18px rgba(0,0,0,0.12);
-  }
-  .hero h1{margin:0;font-size:28px;letter-spacing:-0.6px}
-  .hero p{margin:6px 0 0;color:rgba(255,255,255,0.85) }
+  .logo img{width:84px;height:84px;border-radius:12px;object-fit:cover}
+  .hero h1{margin:0;font-size:28px}
+  .hero p{margin:6px 0 0;color:rgba(255,255,255,0.85)}
 
   .grid{display:grid;grid-template-columns:1fr 420px;gap:24px;margin-top:20px}
-  @media (max-width:900px){ .grid{grid-template-columns:1fr; } .hero{flex-direction:column; text-align:center;} }
+  @media (max-width:900px){.grid{grid-template-columns:1fr}.hero{flex-direction:column;text-align:center}}
 
-  /* left column (info + services) */
   .card{background:var(--card);border-radius:var(--radius);padding:20px;box-shadow:0 8px 30px rgba(2,6,23,0.08);}
-  .section-title{display:flex;align-items:center;gap:12px;margin-bottom:12px}
   .section-title h2{margin:0;font-size:18px}
   .desc{color:var(--muted);margin-bottom:8px}
 
   .services{display:flex;flex-wrap:wrap;gap:12px;margin-top:8px}
   .service{
-    flex:1 1 45%;padding:14px;border-radius:12px;border:1px solid #eef2ff;background:linear-gradient(180deg,#fff,#fbfbff);
-    text-align:center;font-weight:600;cursor:pointer;transition:all .15s
+    flex:1 1 45%;padding:14px;border-radius:12px;border:1px solid #eef2ff;background:#fff;
+    text-align:center;font-weight:600;cursor:pointer;transition:.15s
   }
   .service:hover{transform:translateY(-4px);box-shadow:0 8px 20px rgba(11,18,32,0.06)}
   .service.selected{border-color:var(--accent);box-shadow:0 8px 30px rgba(246,178,26,0.12)}
 
-  /* right column (booking) */
-  .booking-header{display:flex;align-items:center;justify-content:space-between;gap:12px}
-  .booking-header h3{margin:0}
-  .booking {margin-top:12px}
-  label{display:block;font-size:13px;color:#374151;margin-bottom:6px}
-  input[type="text"], input[type="email"], select, input[type="date"]{
-    width:100%;padding:10px;border-radius:10px;border:1px solid #e6e7ee;font-size:14px;
-  }
-  .times {display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+  label{display:block;font-size:13px;color:#374151;margin:10px 0 6px}
+  input,select{width:100%;padding:10px;border-radius:10px;border:1px solid #e6e7ee;font-size:14px}
+  .times{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
   .slot{padding:8px 12px;border-radius:10px;border:1px solid #e6e7ee;background:#fff;cursor:pointer;font-weight:600}
-  .slot:hover{transform:translateY(-3px)}
-  .slot.off{background:#f3f4f6;color:#9ca3af;border-color:#e9e9ef;cursor:not-allowed}
-  .slot.selected{background:var(--accent);color:#08101a;border-color:rgba(0,0,0,0.06);box-shadow:0 8px 20px rgba(246,178,26,0.12)}
+  .slot.off{background:#f3f4f6;color:#9ca3af;cursor:not-allowed}
+  .slot.selected{background:var(--accent);color:#08101a}
   .btn{display:inline-block;width:100%;padding:12px;border-radius:12px;background:#08101a;color:#fff;font-weight:700;border:none;cursor:pointer;margin-top:12px}
-  .muted {font-size:13px;color:#6b7280;margin-top:8px;text-align:center}
 
-  .msg {padding:10px;border-radius:10px;margin-top:10px;font-weight:700;text-align:center}
+  .msg{padding:10px;border-radius:10px;margin-top:10px;font-weight:700;text-align:center;display:none}
   .msg.success{background:#ecfdf5;color:#065f46;border:1px solid #bbf7d0}
   .msg.error{background:#fff1f2;color:#7f1d1d;border:1px solid #fecaca}
+
+  .mensaje-instagram{padding:15px;border-radius:10px;background:#0b1220;color:#fff;text-align:center;margin-top:10px}
+  .mensaje-instagram a{color:var(--accent);font-weight:bold;text-decoration:none}
 
   footer{margin-top:20px;text-align:center;color:#94a3b8;font-size:13px}
   footer a{color:var(--accent);font-weight:600;text-decoration:none}
@@ -79,101 +66,71 @@
 </head>
 <body>
 <div class="wrap">
-    <div class="hero">
-    <div class="logo">
-<img src="img/gmbarber.jpg" alt="GM Barber" style="width:84px; height:84px; border-radius:12px; object-fit:cover;">
-</div>
-
-      <div>
-        <h1>GM Barber — Reserva tu turno</h1>
-        <p>Profesionalidad, estilo y puntualidad. Reserva fácil y rápida.</p>
-      </div>
-      <div style="margin-left:auto;text-align:right;color:#fff">
-        <div style="font-size:13px;opacity:.9">Miercoles a Sábado</div>
-        <div style="font-weight:800;font-size:18px">14:00 - 19:15 hs</div>
-      </div>
+  <div class="hero">
+    <div class="logo"><img src="img/gmbarber.jpg" alt="GM Barber"></div>
+    <div>
+      <h1>GM Barber — Reserva tu turno</h1>
+      <p>Profesionalidad, estilo y puntualidad. Reserva fácil y rápida.</p>
     </div>
-
-    <div class="grid">
-      <!-- INFO / SERVICIOS -->
-      <div>
-        <div class="card">
-          <div class="section-title"><h2>Servicios — Cortes</h2></div>
-          <div class="services" id="services">
-            <div class="service selected" data-service="Corte + afeitado de barba">Corte + afeitado de barba $9.000</div>
-            <div class="service" data-service="Corte + perfilado de barba">Corte + perfilado de barba $9.000</div>
-            <div class="service" data-service="Corte">Corte $8.000</div>
-          </div>
-
-          <hr style="margin:18px 0;border:none;border-top:1px solid #f1f5f9">
-
-          <div class="section-title"><h2>Servicios — Color</h2></div>
-          <div class="services">
-            <div class="service" data-service="Global + corte Desde 33.000">Global + corte <br><small>Desde $33.000</small></div>
-            <div class="service" data-service="Reflejos + corte Desde 33.000">Reflejos + corte <br><small>Desde $33.000</small></div>
-            <div class="service" data-service="GLOBAL Desde 25.000">GLOBAL <br><small>Desde $25.000</small></div>
-            <div class="service" data-service="Reflejos Desde 25.000">Reflejos <br><small>Desde $25.000</small></div>
-          </div>
-        </div>
-
-        <div style="height:16px"></div>
-
-        <div class="card">
-          <div class="section-title"><h2>Instrucciones</h2></div>
-          <p class="desc">Seleccioná fecha (Miercoles a Sábado), elegí la hora disponible y completá tus datos. Recibirás confirmación por email.</p>
-          <p class="muted">Si el horario figura "Reservado" ya no está disponible.</p>
-        </div>
-      </div>
-
-      <!-- BOOKING -->
-      <div>
-        <div class="card">
-          <div class="booking-header">
-            <h3>Reservar turno</h3>
-            <div style="color:var(--muted)">14:00 - 19:15 • L-S</div>
-          </div>
-
-          <div class="booking" id="booking">
-            <label for="date">Fecha</label>
-            <input type="date" id="date" min="" />
-
-            <label style="margin-top:10px">Hora</label>
-            <div class="times" id="times"></div>
-
-            <label style="margin-top:12px">Servicio</label>
-            <select id="serviceSelect">
-              <option value="Corte + afeitado de barba">Corte + afeitado de barba</option>
-              <option value="Corte + perfilado de barba">Corte + perfilado de barba</option>
-              <option value="Corte">Corte</option>
-              <option value="Global + corte Desde 33.000">Global + corte Desde $33.000</option>
-              <option value="Reflejos + corte Desde 33.000">Reflejos + corte Desde $33.000</option>
-              <option value="GLOBAL Desde 25.000">GLOBAL Desde $25.000</option>
-              <option value="Reflejos Desde 25.000">Reflejos Desde $25.000</option>
-            </select>
-
-            <label style="margin-top:12px">Nombre</label>
-            <input type="text" id="name" placeholder="Tu nombre" />
-
-            <label style="margin-top:12px">Email</label>
-            <input type="email" id="email" placeholder="tu@correo.com" />
-
-            <button id="bookBtn" class="btn">Confirmar reserva</button>
-
-            <div id="message" class="msg" style="display:none"></div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <footer>
-      © <span id="year"></span> GM Barber — Reservas online<br>
-      Libertad 4373, Lanús Oeste<br>
-      <a href="https://www.instagram.com/gmbarber_" target="_blank">@gmbarber_</a>
-    </footer>
   </div>
 
-<script>
+  <div class="grid">
+    <!-- SERVICIOS -->
+    <div>
+      <div class="card">
+        <div class="section-title"><h2>Servicios — Cortes</h2></div>
+        <div class="services" id="services">
+          <div class="service selected" data-service="Corte + afeitado de barba">Corte + afeitado de barba $9.000</div>
+          <div class="service" data-service="Corte + perfilado de barba">Corte + perfilado de barba $9.000</div>
+          <div class="service" data-service="Corte">Corte $8.000</div>
+        </div>
+        <hr>
+        <div class="section-title"><h2>Servicios — Color</h2></div>
+        <div class="services">
+          <div class="service" data-service="Global + corte">Global + corte <br><small>Desde $33.000</small></div>
+          <div class="service" data-service="Reflejos + corte">Reflejos + corte <br><small>Desde $33.000</small></div>
+          <div class="service" data-service="GLOBAL">GLOBAL <br><small>Desde $25.000</small></div>
+          <div class="service" data-service="Reflejos">Reflejos <br><small>Desde $25.000</small></div>
+        </div>
+      </div>
+    </div>
 
+    <!-- RESERVAS -->
+    <div>
+      <div class="card">
+        <h3>Reservar turno</h3>
+        <label>Fecha</label>
+        <input type="date" id="date" min="">
+        <label>Hora</label>
+        <div class="times" id="times"></div>
+        <label>Servicio</label>
+        <select id="serviceSelect">
+          <option value="Corte + afeitado de barba">Corte + afeitado de barba</option>
+          <option value="Corte + perfilado de barba">Corte + perfilado de barba</option>
+          <option value="Corte">Corte</option>
+          <option value="Global + corte">Global + corte</option>
+          <option value="Reflejos + corte">Reflejos + corte</option>
+          <option value="GLOBAL">GLOBAL</option>
+          <option value="Reflejos">Reflejos</option>
+        </select>
+        <label>Nombre</label>
+        <input type="text" id="name" placeholder="Tu nombre">
+        <label>Email</label>
+        <input type="email" id="email" placeholder="tu@correo.com">
+        <button id="bookBtn" class="btn">Confirmar reserva</button>
+        <div id="message" class="msg"></div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    © <span id="year"></span> GM Barber — Reservas online<br>
+    Libertad 4373, Lanús Oeste<br>
+    <a href="https://www.instagram.com/gmbarber_" target="_blank">@gmbarber_</a>
+  </footer>
+</div>
+
+<script>
 document.addEventListener("DOMContentLoaded", () => {
   const dateInput = document.getElementById("date");
   const timesContainer = document.getElementById("times");
@@ -182,112 +139,143 @@ document.addEventListener("DOMContentLoaded", () => {
   const serviceSelect = document.getElementById("serviceSelect");
   const services = document.querySelectorAll(".service");
 
-  // -------- Fecha mínima = hoy --------
+  // Servicios de color
+  const serviciosColor = ["Global + corte","Reflejos + corte","GLOBAL","Reflejos"];
+
+  // Fecha mínima = hoy
   const today = new Date();
   const yyyy = today.getFullYear();
   const mm = String(today.getMonth() + 1).padStart(2, "0");
   const dd = String(today.getDate()).padStart(2, "0");
   dateInput.min = `${yyyy}-${mm}-${dd}`;
 
-  // -------- Generar horarios --------
-  function generateTimes() {
+  // Config horarios
+  const horarios = {
+    3: { start: "16:00", end: "19:00" }, // Miércoles
+    4: { start: "13:30", end: "15:30" }, // Jueves
+    5: { start: "14:00", end: "19:00", ocupados: ["15:30","17:00","17:45"] }, // Viernes
+    6: { start: "16:30", end: "20:00" }  // Sábado
+  };
+
+  function generateTimes(fecha) {
     timesContainer.innerHTML = "";
-    let start = 14 * 60; // 14:00 en minutos
-    let end = 19 * 60 + 30; // 19:30 en minutos
-    let step = 45; // cada 45 minutos
+    if (!fecha) return;
 
-    for (let t = start; t <= end; t += step) {
-      let h = Math.floor(t / 60).toString().padStart(2, "0");
-      let m = (t % 60).toString().padStart(2, "0");
-      let timeStr = `${h}:${m}`;
+    const [y, m, d] = fecha.split("-").map(Number);
+    const selected = new Date(y, m - 1, d);
+    const day = selected.getDay();
+    const conf = horarios[day];
+    if (!conf) {
+      timesContainer.innerHTML = "<div class='muted'>No hay turnos disponibles</div>";
+      return;
+    }
 
-      let slot = document.createElement("div");
+    const { start, end, ocupados = [] } = conf;
+    const [sh, sm] = start.split(":").map(Number);
+    const [eh, em] = end.split(":").map(Number);
+    const startMin = sh * 60 + sm;
+    const endMin = eh * 60 + em;
+    const step = 45;
+
+    for (let t = startMin; t <= endMin; t += step) {
+      const h = String(Math.floor(t / 60)).padStart(2, "0");
+      const mnn = String(t % 60).padStart(2, "0");
+      const timeStr = `${h}:${mnn}`;
+      const slot = document.createElement("div");
       slot.className = "slot";
       slot.textContent = timeStr;
       slot.dataset.time = timeStr;
 
-      slot.addEventListener("click", () => {
-        document.querySelectorAll(".slot").forEach(s => s.classList.remove("selected"));
-        slot.classList.add("selected");
-      });
-
+      if (ocupados.includes(timeStr)) {
+        slot.classList.add("off");
+        slot.textContent = timeStr+" (Reservado)";
+      } else {
+        slot.addEventListener("click", () => {
+          document.querySelectorAll(".slot").forEach(s => s.classList.remove("selected"));
+          slot.classList.add("selected");
+        });
+      }
       timesContainer.appendChild(slot);
     }
   }
-  generateTimes();
 
-  // -------- Sincronizar servicios (cards ↔ select) --------
+  // Mostrar mensaje de Instagram para servicios color
+  function mostrarMensajeInstagram() {
+    timesContainer.innerHTML = `
+      <div class="mensaje-instagram">
+        Para coordinar horario hablame en
+        <a href="https://www.instagram.com/gmbarber_" target="_blank">@gmbarber_</a>
+      </div>
+    `;
+  }
+
+  // Eventos
+  serviceSelect.addEventListener("change", () => {
+    if (serviciosColor.includes(serviceSelect.value)) {
+      mostrarMensajeInstagram();
+    } else if (dateInput.value) {
+      generateTimes(dateInput.value);
+    }
+  });
+
+  dateInput.addEventListener("change", () => {
+    if (!serviciosColor.includes(serviceSelect.value)) {
+      generateTimes(dateInput.value);
+    }
+  });
+
   services.forEach(service => {
     service.addEventListener("click", () => {
       services.forEach(s => s.classList.remove("selected"));
       service.classList.add("selected");
       serviceSelect.value = service.dataset.service;
-    });
-  });
-
-  serviceSelect.addEventListener("change", () => {
-    services.forEach(s => {
-      if (s.dataset.service === serviceSelect.value) {
-        s.classList.add("selected");
-      } else {
-        s.classList.remove("selected");
+      if (serviciosColor.includes(serviceSelect.value)) {
+        mostrarMensajeInstagram();
+      } else if (dateInput.value) {
+        generateTimes(dateInput.value);
       }
     });
   });
 
-  // -------- Confirmar reserva --------
+  // Guardar reserva en Google Sheets
   bookBtn.addEventListener("click", () => {
-  const name = document.getElementById("name").value.trim();
-  const email = document.getElementById("email").value.trim();
-  const date = dateInput.value;
-  const timeEl = document.querySelector(".slot.selected");
-  const service = serviceSelect.value;
+    const name = document.getElementById("name").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const date = dateInput.value;
+    const timeEl = document.querySelector(".slot.selected");
+    const service = serviceSelect.value;
 
-  if (!name || !email || !date || !timeEl) {
-    showMessage("Por favor completá todos los campos.", "error");
-    return;
-  }
-
-  const data = {
-    name,
-    email,
-    date,
-    time: timeEl.dataset.time,
-    service
-  };
-
-  // ⚡ Pegar aquí la URL de tu Web App
-  const scriptURL = "https://script.google.com/macros/s/AKfycbxwPcrXWtpUXlwTv9zKB2mRCMmrnWGAgGZvz0Z0b-IWKuz8QhMCpI3JgKuG9PaJgsXpBQ/exec";
-
-  fetch(scriptURL, {
-    method: "POST",
-    body: JSON.stringify(data)
-  })
-  .then(res => res.json())
-  .then(response => {
-    if (response.status === "success") {
-      showMessage("✅ Reserva Confirmada", "success");
-      document.getElementById("name").value = "";
-      document.getElementById("email").value = "";
-      timeEl.classList.remove("selected");
-    } else {
-      showMessage("⚠️ Error: " + response.message, "error");
+    if (serviciosColor.includes(service)) {
+      showMessage("ℹ️ Para servicios de color coordiná por Instagram", "error");
+      return;
     }
-  })
-  .catch(err => showMessage("❌ Error al conectar con Google Sheets", "error"));
-});
 
+    if (!name || !email || !date || !timeEl) {
+      showMessage("Por favor completá todos los campos.", "error");
+      return;
+    }
 
-    // Simulación de envío (aquí podrías hacer fetch a backend)
-    showMessage(`✅ Reserva confirmada para ${name} el ${date} a las ${timeEl.dataset.time} (${service})`, "success");
+    const data = { name, email, date, time: timeEl.dataset.time, service };
+    const scriptURL = "https://script.google.com/macros/s/AKfycbxwPcrXWtpUXlwTv9zKB2mRCMmrnWGAgGZvz0Z0b-IWKuz8QhMCpI3JgKuG9PaJgsXpBQ/exec";
 
-    // Reset (opcional)
-    document.getElementById("name").value = "";
-    document.getElementById("email").value = "";
-    timeEl.classList.remove("selected");
+    fetch(scriptURL, {
+      method: "POST",
+      body: JSON.stringify(data)
+    })
+    .then(res => res.json())
+    .then(response => {
+      if (response.status === "success") {
+        showMessage("✅ Reserva Confirmada", "success");
+        document.getElementById("name").value = "";
+        document.getElementById("email").value = "";
+        if (timeEl) timeEl.classList.remove("selected");
+      } else {
+        showMessage("⚠️ Error: " + response.message, "error");
+      }
+    })
+    .catch(() => showMessage("❌ Error al conectar con Google Sheets", "error"));
   });
 
-  // -------- Mostrar mensajes --------
   function showMessage(text, type) {
     message.textContent = text;
     message.className = "msg " + type;
@@ -295,11 +283,8 @@ document.addEventListener("DOMContentLoaded", () => {
     setTimeout(() => { message.style.display = "none"; }, 5000);
   }
 
-  // -------- Año en footer --------
   document.getElementById("year").textContent = new Date().getFullYear();
-
+});
 </script>
 </body>
 </html>
-
-
