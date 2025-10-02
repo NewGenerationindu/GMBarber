@@ -235,11 +235,21 @@ document.addEventListener("DOMContentLoaded", () => {
   const horarios = {
     3: { start: "16:00", end: "19:00" }, 
     4: { start: "13:30", end: "15:30" }, 
-    5: { start: "14:00", end: "19:00", ocupados: ["15:30","17:00","17:45"] }, 
+    5: { start: "14:00", end: "19:00", ocupados: ["15:30","17:00","17:45"] },  // ⭐ fijos de sábado
     6: { start: "16:30", end: "20:00" }  
   };
 
-  function generateTimes(fecha) {
+  function loadOcupados(date) {
+    return fetch(`https://script.google.com/macros/s/AKfycbzQocTERDGMMTBX_Y8jsNdlD2MuXPNYVb3FgGv2TZ2TYQg-nDYiDU_WvdNPhqjLDbSzDg/exec?date=${date}`)
+      .then(res => res.json())
+      .then(data => data.ocupados || [])
+      .catch(err => {
+        console.error("Error al cargar ocupados", err);
+        return [];
+      });
+  }
+
+  async function generateTimes(fecha) {
     timesContainer.innerHTML = "";
     if (!fecha) return;
     const [y, m, d] = fecha.split("-").map(Number);
@@ -250,7 +260,17 @@ document.addEventListener("DOMContentLoaded", () => {
       timesContainer.innerHTML = "<div class='muted'>No hay turnos disponibles</div>";
       return;
     }
-    const { start, end, ocupados = [] } = conf;
+    const { start, end } = conf;
+
+    // 🚀 combinar ocupados fijos + servidor
+    let ocupadosServidor = await loadOcupados(fecha);
+    let ocupados = [];
+    if (conf.ocupados) {
+      ocupados = [...conf.ocupados, ...ocupadosServidor];
+    } else {
+      ocupados = ocupadosServidor;
+    }
+
     const [sh, sm] = start.split(":").map(Number);
     const [eh, em] = end.split(":").map(Number);
     const startMin = sh * 60 + sm;
@@ -316,56 +336,52 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  
   bookBtn.addEventListener("click", () => {
-  const name = document.getElementById("name").value.trim();
-  const email = document.getElementById("email").value.trim();
-  const date = dateInput.value;
-  const timeEl = document.querySelector(".slot.selected");
-  const service = serviceSelect.value;
+    const name = document.getElementById("name").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const date = dateInput.value;
+    const timeEl = document.querySelector(".slot.selected");
+    const service = serviceSelect.value;
 
-  if (serviciosColor.includes(service)) {
-    showMessage("ℹ️ Para servicios de color coordiná por Instagram", "error");
-    return;
-  }
-  if (!name || !email || !date || !timeEl) {
-    showMessage("Por favor completá todos los campos.", "error");
-    return;
-  }
-
-  const time = timeEl.dataset.time;
-
-  // ⬇️ ACÁ AGREGO EL FETCH ⬇️
-  const url = "https://script.google.com/macros/s/AKfycbxk5w31UwAdlIFKKDW5GSM-q8VzfVDUwwcziZ1YcrBzFGY3PDTkeYa7hIjbDMGlirY4kA/exec"; // tu URL del Apps Script Web App
-
-  fetch(url, {
-    method: "POST",
-    body: JSON.stringify({ 
-      date: date, 
-      time: time, 
-      name: name, 
-      email: email, 
-      service: service 
-    }),
-    headers: { "Content-Type": "application/json" }
-  })
-  .then(res => res.json())
-  .then(res => {
-    if (res.status === "success") {
-      showMessage("✅ Reserva Confirmada. Te enviamos un mail!", "success");
-    } else {
-      showMessage("⚠️ Error al enviar la reserva.", "error");
+    if (serviciosColor.includes(service)) {
+      showMessage("ℹ️ Para servicios de color coordiná por Instagram", "error");
+      return;
     }
-  })
-  .catch(err => {
-    console.error(err);
-    showMessage("⚠️ No se pudo conectar con el servidor.", "error");
+    if (!name || !email || !date || !timeEl) {
+      showMessage("Por favor completá todos los campos.", "error");
+      return;
+    }
+    showMessage("⏳ Guardando tu reserva...", "success");
+
+    fetch("https://script.google.com/macros/s/AKfycbzQocTERDGMMTBX_Y8jsNdlD2MuXPNYVb3FgGv2TZ2TYQg-nDYiDU_WvdNPhqjLDbSzDg/exec", {
+      method: "POST",
+      body: JSON.stringify({
+        name,
+        email,
+        date,
+        time: timeEl.dataset.time,
+        service
+      }),
+      headers: { "Content-Type": "text/plain;charset=utf-8" }
+    })
+    .then(res => res.json())
+    .then(result => {
+      if (result.status === "success") {
+        showMessage("✅ Reserva Confirmada", "success");
+
+        // 🔄 Refrescar horarios con la respuesta del servidor
+        if (result.ocupados) {
+          generateTimes(date);
+        }
+      } else {
+        showMessage("❌ " + result.message, "error");
+      }
+    })
+    .catch(err => {
+      console.error("⚠️ Error de conexión", err);
+      showMessage("⚠️ Error de conexión con servidor", "error");
+    });
   });
-  // ⬆️ ACÁ TERMINA EL FETCH ⬆️
-
-}); // ← esta llave cierra el addEventListener
-
-
 
   function showMessage(text, type) {
     message.textContent = text;
@@ -380,8 +396,8 @@ document.getElementById("goServices").addEventListener("click", () => {
   document.getElementById("services").scrollIntoView({ behavior: "smooth" });
 });
 </script>
+
+
+
 </body>
 </html>
-
-
-
