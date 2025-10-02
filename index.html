@@ -316,23 +316,56 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
+  
   bookBtn.addEventListener("click", () => {
-    const name = document.getElementById("name").value.trim();
-    const email = document.getElementById("email").value.trim();
-    const date = dateInput.value;
-    const timeEl = document.querySelector(".slot.selected");
-    const service = serviceSelect.value;
+  const name = document.getElementById("name").value.trim();
+  const email = document.getElementById("email").value.trim();
+  const date = dateInput.value;
+  const timeEl = document.querySelector(".slot.selected");
+  const service = serviceSelect.value;
 
-    if (serviciosColor.includes(service)) {
-      showMessage("ℹ️ Para servicios de color coordiná por Instagram", "error");
-      return;
+  if (serviciosColor.includes(service)) {
+    showMessage("ℹ️ Para servicios de color coordiná por Instagram", "error");
+    return;
+  }
+  if (!name || !email || !date || !timeEl) {
+    showMessage("Por favor completá todos los campos.", "error");
+    return;
+  }
+
+  const time = timeEl.dataset.time;
+
+  // ⬇️ ACÁ AGREGO EL FETCH ⬇️
+  const url = "https://script.google.com/macros/s/AKfycbxk5w31UwAdlIFKKDW5GSM-q8VzfVDUwwcziZ1YcrBzFGY3PDTkeYa7hIjbDMGlirY4kA/exec"; // tu URL del Apps Script Web App
+
+  fetch(url, {
+    method: "POST",
+    body: JSON.stringify({ 
+      date: date, 
+      time: time, 
+      name: name, 
+      email: email, 
+      service: service 
+    }),
+    headers: { "Content-Type": "application/json" }
+  })
+  .then(res => res.json())
+  .then(res => {
+    if (res.status === "success") {
+      showMessage("✅ Reserva Confirmada. Te enviamos un mail!", "success");
+    } else {
+      showMessage("⚠️ Error al enviar la reserva.", "error");
     }
-    if (!name || !email || !date || !timeEl) {
-      showMessage("Por favor completá todos los campos.", "error");
-      return;
-    }
-    showMessage("✅ Reserva Confirmada", "success");
+  })
+  .catch(err => {
+    console.error(err);
+    showMessage("⚠️ No se pudo conectar con el servidor.", "error");
   });
+  // ⬆️ ACÁ TERMINA EL FETCH ⬆️
+
+}); // ← esta llave cierra el addEventListener
+
+
 
   function showMessage(text, type) {
     message.textContent = text;
