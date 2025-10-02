@@ -100,15 +100,27 @@
 
   /* Mensaje Instagram destacado */
   .mensaje-instagram{
-    padding:18px;border-radius:12px;
-    background:linear-gradient(135deg,#fef3c7,#fde68a);
-    color:#92400e;font-weight:600;
+    padding:22px;border-radius:14px;
+    background:#0d3d35;
+    color:#fff;font-weight:600;
     text-align:center;margin-top:12px;
-    box-shadow:0 6px 20px rgba(0,0,0,0.1);
+    box-shadow:0 6px 25px rgba(0,0,0,0.3);
     animation: fadeIn .8s ease;
   }
-  .mensaje-instagram a{color:#b45309;font-weight:bold;text-decoration:none}
-  .mensaje-instagram a:hover{text-decoration:underline}
+  .mensaje-instagram p{margin:10px 0;font-size:15px}
+  .mensaje-instagram a{
+    display:inline-block;
+    margin-top:10px;
+    background:#00ffaa;
+    color:#000;
+    font-weight:bold;
+    padding:12px 28px;
+    border-radius:10px;
+    text-decoration:none;
+    box-shadow:0 0 15px #00ffaa;
+    transition:transform .2s;
+  }
+  .mensaje-instagram a:hover{transform:scale(1.05)}
 
   footer{margin-top:20px;text-align:center;color:#94a3b8;font-size:13px}
   footer a{color:var(--accent);font-weight:600;text-decoration:none}
@@ -120,7 +132,7 @@
   <!-- BANNER PRINCIPAL -->
 <div class="banner">
   <img src="img/GM.png" alt="GM Barber Banner">
-  <button id="goServices" class="banner-btn">Reservar ahora</a>
+  <button id="goServices" class="banner-btn">Reservar ahora</button>
 </div>
 
 <div class="wrap">
@@ -150,14 +162,14 @@
         <div class="services">
           <div class="service" data-service="Global">Global<br><small>Desde $35.000</small></div>
           <div class="service" data-service="Reflejos">Reflejos<br><small>Desde $35.000</small></div>
-          <div class="service" data-service="GLOBAL">Franjas/Mechones<br><small>Desde $20.000</small></div>
+          <div class="service" data-service="Franjas/Mechones">Franjas/Mechones<br><small>Desde $20.000</small></div>
         </div>
       </div>
     </div>
 
     <!-- RESERVAS -->
     <div>
-      <div class="card">
+      <div class="card" id="formulario-turno">
         <h3>Reservar turno</h3>
         <label>Fecha</label>
         <input type="date" id="date" min="">
@@ -170,8 +182,9 @@
           <option value="Corte">Corte</option>
           <option value="Global + corte">Global + corte</option>
           <option value="Reflejos + corte">Reflejos + corte</option>
-          <option value="GLOBAL">GLOBAL</option>
+          <option value="Global">Global</option>
           <option value="Reflejos">Reflejos</option>
+          <option value="Franjas/Mechones">Franjas/Mechones</option>
         </select>
         <label>Nombre</label>
         <input type="text" id="name" placeholder="Tu nombre">
@@ -179,6 +192,15 @@
         <input type="email" id="email" placeholder="tu@correo.com">
         <button id="bookBtn" class="btn">Confirmar reserva</button>
         <div id="message" class="msg"></div>
+      </div>
+
+      <!-- Bloque de Instagram -->
+      <div id="color-reserva" style="display:none;">
+        <div class="mensaje-instagram">
+          <h3>✨ RESERVÁ TU TURNO ONLINE</h3>
+          <p>Para coordinar día y horario de color hablame en Instagram</p>
+          <a href="https://www.instagram.com/gmbarber_" target="_blank">Ir a Instagram</a>
+        </div>
       </div>
     </div>
   </div>
@@ -199,7 +221,10 @@ document.addEventListener("DOMContentLoaded", () => {
   const serviceSelect = document.getElementById("serviceSelect");
   const services = document.querySelectorAll(".service");
 
-  const serviciosColor = ["Global + corte","Reflejos + corte","GLOBAL","Reflejos"];
+  const formularioTurno = document.getElementById("formulario-turno");
+  const bloqueInstagram = document.getElementById("color-reserva");
+
+  const serviciosColor = ["Global + corte","Reflejos + corte","Global","Reflejos","Franjas/Mechones"];
 
   const today = new Date();
   const yyyy = today.getFullYear();
@@ -252,20 +277,22 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  function mostrarMensajeInstagram() {
-    timesContainer.innerHTML = `
-      <div class="mensaje-instagram">
-        ✨ Para coordinar día y horario de color hablame en 
-        <a href="https://www.instagram.com/gmbarber_" target="_blank">@gmbarber_</a>
-      </div>
-    `;
+  function mostrarBloqueInstagram() {
+    formularioTurno.style.display = "none";
+    bloqueInstagram.style.display = "block";
+  }
+
+  function mostrarFormularioNormal() {
+    formularioTurno.style.display = "block";
+    bloqueInstagram.style.display = "none";
   }
 
   serviceSelect.addEventListener("change", () => {
     if (serviciosColor.includes(serviceSelect.value)) {
-      mostrarMensajeInstagram();
-    } else if (dateInput.value) {
-      generateTimes(dateInput.value);
+      mostrarBloqueInstagram();
+    } else {
+      mostrarFormularioNormal();
+      if (dateInput.value) generateTimes(dateInput.value);
     }
   });
 
@@ -281,9 +308,10 @@ document.addEventListener("DOMContentLoaded", () => {
       service.classList.add("selected");
       serviceSelect.value = service.dataset.service;
       if (serviciosColor.includes(serviceSelect.value)) {
-        mostrarMensajeInstagram();
-      } else if (dateInput.value) {
-        generateTimes(dateInput.value);
+        mostrarBloqueInstagram();
+      } else {
+        mostrarFormularioNormal();
+        if (dateInput.value) generateTimes(dateInput.value);
       }
     });
   });
@@ -318,7 +346,9 @@ document.addEventListener("DOMContentLoaded", () => {
 document.getElementById("goServices").addEventListener("click", () => {
   document.getElementById("services").scrollIntoView({ behavior: "smooth" });
 });
-
 </script>
 </body>
 </html>
+
+
+
