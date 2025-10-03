@@ -162,7 +162,6 @@
         <div class="services">
           <div class="service" data-service="Global">Global<br><small>Desde $35.000</small></div>
           <div class="service" data-service="Reflejos">Reflejos<br><small>Desde $35.000</small></div>
-          <div class="service" data-service="Franjas/Mechones">Franjas/Mechones<br><small>Desde $20.000</small></div>
         </div>
       </div>
     </div>
@@ -184,7 +183,7 @@
           <option value="Reflejos + corte">Reflejos + corte</option>
           <option value="Global">Global</option>
           <option value="Reflejos">Reflejos</option>
-          <option value="Franjas/Mechones">Franjas/Mechones</option>
+          
         </select>
         <label>Nombre</label>
         <input type="text" id="name" placeholder="Tu nombre">
@@ -224,7 +223,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const formularioTurno = document.getElementById("formulario-turno");
   const bloqueInstagram = document.getElementById("color-reserva");
 
-  const serviciosColor = ["Global + corte","Reflejos + corte","Global","Reflejos","Franjas/Mechones"];
+  const serviciosColor = ["Global + corte","Reflejos + corte","Global","Reflejos"];
 
   const today = new Date();
   const yyyy = today.getFullYear();
@@ -235,21 +234,11 @@ document.addEventListener("DOMContentLoaded", () => {
   const horarios = {
     3: { start: "16:00", end: "19:00" }, 
     4: { start: "13:30", end: "15:30" }, 
-    5: { start: "14:00", end: "19:00", ocupados: ["15:30","17:00","17:45"] },  // ⭐ fijos de sábado
+    5: { start: "14:00", end: "19:00", ocupados: ["15:30","17:00","17:45"] }, 
     6: { start: "16:30", end: "20:00" }  
   };
 
-  function loadOcupados(date) {
-    return fetch(`https://script.google.com/macros/s/AKfycbzQocTERDGMMTBX_Y8jsNdlD2MuXPNYVb3FgGv2TZ2TYQg-nDYiDU_WvdNPhqjLDbSzDg/exec?date=${date}`)
-      .then(res => res.json())
-      .then(data => data.ocupados || [])
-      .catch(err => {
-        console.error("Error al cargar ocupados", err);
-        return [];
-      });
-  }
-
-  async function generateTimes(fecha) {
+  function generateTimes(fecha) {
     timesContainer.innerHTML = "";
     if (!fecha) return;
     const [y, m, d] = fecha.split("-").map(Number);
@@ -260,17 +249,7 @@ document.addEventListener("DOMContentLoaded", () => {
       timesContainer.innerHTML = "<div class='muted'>No hay turnos disponibles</div>";
       return;
     }
-    const { start, end } = conf;
-
-    // 🚀 combinar ocupados fijos + servidor
-    let ocupadosServidor = await loadOcupados(fecha);
-    let ocupados = [];
-    if (conf.ocupados) {
-      ocupados = [...conf.ocupados, ...ocupadosServidor];
-    } else {
-      ocupados = ocupadosServidor;
-    }
-
+    const { start, end, ocupados = [] } = conf;
     const [sh, sm] = start.split(":").map(Number);
     const [eh, em] = end.split(":").map(Number);
     const startMin = sh * 60 + sm;
@@ -351,9 +330,10 @@ document.addEventListener("DOMContentLoaded", () => {
       showMessage("Por favor completá todos los campos.", "error");
       return;
     }
-    showMessage("⏳ Guardando tu reserva...", "success");
+    showMessage("✅ Reserva Confirmada", "success");
 
-    fetch("https://script.google.com/macros/s/AKfycbzQocTERDGMMTBX_Y8jsNdlD2MuXPNYVb3FgGv2TZ2TYQg-nDYiDU_WvdNPhqjLDbSzDg/exec", {
+    // 🚀 Envío al Google Script
+    fetch("https://script.google.com/macros/s/AKfycbw1l6borpt7ak6wuEVCh5XttZMu-sNwwRRBpDqO2BqFrp3hAZhZr5EwNbcndCvwJGkF2Q/exec", {
       method: "POST",
       body: JSON.stringify({
         name,
@@ -367,19 +347,13 @@ document.addEventListener("DOMContentLoaded", () => {
     .then(res => res.json())
     .then(result => {
       if (result.status === "success") {
-        showMessage("✅ Reserva Confirmada", "success");
-
-        // 🔄 Refrescar horarios con la respuesta del servidor
-        if (result.ocupados) {
-          generateTimes(date);
-        }
+        console.log("Guardado en hoja ✅", result);
       } else {
-        showMessage("❌ " + result.message, "error");
+        console.error("Error en servidor ❌", result);
       }
     })
     .catch(err => {
       console.error("⚠️ Error de conexión", err);
-      showMessage("⚠️ Error de conexión con servidor", "error");
     });
   });
 
@@ -396,8 +370,6 @@ document.getElementById("goServices").addEventListener("click", () => {
   document.getElementById("services").scrollIntoView({ behavior: "smooth" });
 });
 </script>
-
-
 
 </body>
 </html>
