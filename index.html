@@ -162,6 +162,7 @@
         <div class="services">
           <div class="service" data-service="Global">Global<br><small>Desde $35.000</small></div>
           <div class="service" data-service="Reflejos">Reflejos<br><small>Desde $35.000</small></div>
+          
         </div>
       </div>
     </div>
@@ -333,7 +334,7 @@ document.addEventListener("DOMContentLoaded", () => {
     showMessage("✅ Reserva Confirmada", "success");
 
     // 🚀 Envío al Google Script
-    fetch("https://script.google.com/macros/s/AKfycbw1l6borpt7ak6wuEVCh5XttZMu-sNwwRRBpDqO2BqFrp3hAZhZr5EwNbcndCvwJGkF2Q/exec", {
+    fetch("https://script.google.com/macros/s/AKfycbyIXCJSAg2ZJZX_2palhPm_LukF1bONFsqPprBtFXpuqAgh1U-Mind5CY_HA2vnJhZdpQ/exec", {
       method: "POST",
       body: JSON.stringify({
         name,
